@@ -22,8 +22,8 @@ export default class Player extends Phaser.GameObjects.Container{
 		this.body.setDrag(70, 70);
 		this.body.setFriction(1, 0);
 		this.body.setCollideWorldBounds(true);
-		//this.player.anims.play('spin', true);
-		//scene.physics.add.collider(this.gear, this.worldLayer, this.HitGround, null, this);
+        
+        scene.add.existing(this);
     }
 
     SteerLeft(){

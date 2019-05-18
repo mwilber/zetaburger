@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 import Player from '../Player';
 
-
 export class DemoScene extends Phaser.Scene {
     constructor() {
 		super({
@@ -30,12 +29,12 @@ export class DemoScene extends Phaser.Scene {
                 y: 16,
                 asset: 'ship'
             },
-            gearasset: 'gear'
+            gear: 'gear'
         });
-        this.add.existing(this.player);
+
+
         this.cameras.main.startFollow(this.player, true);
 
-        //this.player.ship.StartAnimation();
     }
 
     update() {
