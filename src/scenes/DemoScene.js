@@ -24,18 +24,30 @@ export class DemoScene extends Phaser.Scene {
         this.player = new Player({
             scene: this,
             x: 100,
-            y: 100,
-            shipasset: 'ship',
+            y: 3000,
+            ship: {
+                x: 48,
+                y: 16,
+                asset: 'ship'
+            },
             gearasset: 'gear'
-          });
+        });
         this.add.existing(this.player);
         this.cameras.main.startFollow(this.player, true);
 
-        this.player.ship.StartAnimation();
+        //this.player.ship.StartAnimation();
     }
 
     update() {
-
+        if (this.cursors.left.isDown){
+			//this.ConsoleWrite('left');
+			this.player.SteerLeft();
+		}else if (this.cursors.right.isDown){
+			//this.ConsoleWrite('right');
+			this.player.SteerRight();
+		}else{
+			this.player.SteerRelax();
+		}
     }
 
     InitAnims(){

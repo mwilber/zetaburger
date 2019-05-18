@@ -2,14 +2,12 @@ import Phaser from 'phaser';
 import ShipSprite from "./sprites/ShipSprite";
 
 export default class Player extends Phaser.GameObjects.Container{
-    constructor({ scene, x, y, shipasset, gearasset }){
+    constructor({ scene, x, y, ship, gear }){
         super(scene, x, y);
 
         this.ship = new ShipSprite({
-            game: scene,
-            x: 0,
-            y: 0,
-            asset: shipasset
+            ...ship,
+            game: scene
           });
 
         this.add(this.ship);
@@ -26,5 +24,30 @@ export default class Player extends Phaser.GameObjects.Container{
 		this.body.setCollideWorldBounds(true);
 		//this.player.anims.play('spin', true);
 		//scene.physics.add.collider(this.gear, this.worldLayer, this.HitGround, null, this);
+    }
+
+    SteerLeft(){
+        this.body.setAccelerationX(-500);
+        this.body.setAccelerationY(-500);
+        if(this.angle > -15){
+            this.setAngle(this.angle-1);
+        }
+    }
+
+    SteerRight(){
+        this.body.setAccelerationX(500);
+        this.body.setAccelerationY(-500);
+        if(this.angle < 15){
+            this.setAngle(this.angle+1);
+        }
+    }
+
+    SteerRelax(){
+        if(Math.abs(this.angle) < 1){
+            this.setAngle(0);
+        }else{
+            this.setAngle(this.angle*0.7);
+        }
+        this.body.setAcceleration(0);
     }
 }
