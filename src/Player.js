@@ -5,12 +5,23 @@ export default class Player extends Phaser.GameObjects.Container{
     constructor({ scene, x, y, ship, gear }){
         super(scene, x, y);
 
+        this.FLIGHT_MODES = {
+            omicron: 'omicron',
+            delta: 'delta'
+        };
+
+        this.flightmode = this.FLIGHT_MODES.omicron;
+
         this.ship = new ShipSprite({
             ...ship,
             game: scene
           });
 
-        this.add(this.ship);
+        this.gear = scene.add.sprite(48, 66, 'landing_gear');
+		this.gear.visible = true;
+		this.gear.relax = 0;
+
+        this.add([this.ship, this.gear]);
 
         this.setSize(96, 55);
 		this.setActive(true);
@@ -49,5 +60,9 @@ export default class Player extends Phaser.GameObjects.Container{
             this.setAngle(this.angle*0.7);
         }
         this.body.setAcceleration(0);
+    }
+
+    SetFlightMode(flightMode){
+
     }
 }
