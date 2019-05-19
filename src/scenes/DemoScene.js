@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import Player from '../Player';
+import { WorldLayer } from '../WorldLayer.';
 
 export class DemoScene extends Phaser.Scene {
     constructor() {
@@ -10,6 +11,8 @@ export class DemoScene extends Phaser.Scene {
 
 	preload() {
         this.load.spritesheet('ship', '../../assets/sprites/anim_ship_spin.png', { frameWidth: 192, frameHeight: 63 });
+        this.load.image('tiles', '../../assets/sprites/super-mario-tiles.png');
+		this.load.tilemapTiledJSON("map", "../../assets/sprites/SuperMarioTiles.json");
     }
 
     create() {
@@ -19,6 +22,8 @@ export class DemoScene extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
 
         this.InitAnims();
+
+        this.worldLayer = new WorldLayer(this, 'map', 'tiles', ['Background', 'World', 'LandingPads']);
 
         this.player = new Player({
             scene: this,
@@ -32,7 +37,7 @@ export class DemoScene extends Phaser.Scene {
             gear: 'gear'
         });
 
-
+        this.physics.add.collider(this.player, this.worldLayer.layers['World'], this.HitWorld, null, this);
         this.cameras.main.startFollow(this.player, true);
 
     }
@@ -56,5 +61,16 @@ export class DemoScene extends Phaser.Scene {
 			frameRate: 10,
 			repeat: -1
 		});
+    }
+    
+    HitWorld(event){
+		// //console.log('Hit Ground');
+		// //debugger;
+		// this.bank = 0;
+		// this.order = 0;
+		// this.landingObjectLayer = [];
+		// // this.SetHudPad('DEAD!');
+		// // this.SetHudBank();
+		// this.scene.restart();
 	}
 }
