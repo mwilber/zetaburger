@@ -6,9 +6,4 @@ export default class ShipSprite extends Phaser.GameObjects.Sprite {
     game.add.existing(this);
     this.anims.play('spin', true);
   }
-
-  StartAnimation(){
-    console.log('ShipSprite', 'StartAnimation()');
-    
-  }
 }

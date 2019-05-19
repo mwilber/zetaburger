@@ -11,6 +11,7 @@ export class DemoScene extends Phaser.Scene {
 
 	preload() {
         this.load.spritesheet('ship', '../../assets/sprites/anim_ship_spin.png', { frameWidth: 192, frameHeight: 63 });
+        this.load.image('landing_gear', '../../assets/sprites/LandingGear.png');
         this.load.image('tiles', '../../assets/sprites/super-mario-tiles.png');
 		this.load.tilemapTiledJSON("map", "../../assets/sprites/SuperMarioTiles.json");
     }

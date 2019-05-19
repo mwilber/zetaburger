@@ -33,15 +33,15 @@ export class WorldLayers {
 				}
 				scene.physics.world.enable(tmp, 1);
 				scene.physics.add.collider(playerObj, tmp, this.HitLandingPad, null, this);
-				// //debugger;
-				// this.objects.push(tmp);
+				//debugger;
+				this.objects.push(tmp);
 
-				// // Add pad label
-				// if(tmp.properties.padnum !== 0){
-				// 	let xoffset = (tmp.width*.7);
-				// 	if(tmp.x > (this.map.widthInPixels/2)) xoffset = -xoffset;
-				// 	scene.add.text((tmp.x-xoffset), (tmp.y-tmp.height), tmp.properties.padnum, { color: '#ffffff', textAlagn: 'center' });
-				// }
+				// Add pad label
+				if(tmp.properties.padnum !== 0){
+					let xoffset = (tmp.width*.7);
+					if(tmp.x > (this.map.widthInPixels/2)) xoffset = -xoffset;
+					scene.add.text((tmp.x-xoffset), (tmp.y-tmp.height), tmp.properties.padnum, { color: '#ffffff', textAlagn: 'center' });
+				}
 			}
 		);
     }
