@@ -17,7 +17,7 @@ export class WorldLayers {
         }
     }
 
-    CreateObjectLayer(scene, objectLayerKey, playerObj){
+    CreateLandingPadLayer(scene, objectLayerKey, playerObj, collisionHandler){
 		const objects = this.map.getObjectLayer(objectLayerKey); //find the object layer in the tilemap named 'objects'
 
 		objects.objects.forEach(
@@ -32,7 +32,7 @@ export class WorldLayers {
 					}
 				}
 				scene.physics.world.enable(tmp, 1);
-				scene.physics.add.collider(playerObj, tmp, this.HitLandingPad, null, this);
+				scene.physics.add.collider(playerObj, tmp, collisionHandler, null, this);
 				//debugger;
 				this.objects.push(tmp);
 
@@ -44,10 +44,6 @@ export class WorldLayers {
 				}
 			}
 		);
-    }
-    
-    HitLandingPad(){
-
     }
 
 }

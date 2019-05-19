@@ -36,8 +36,8 @@ export class DemoScene extends Phaser.Scene {
             },
             gear: 'gear'
         });
-        this.worldLayers.CreateObjectLayer(this, 'Test', this.player);
 
+        this.worldLayers.CreateLandingPadLayer(this, 'Test', this.player, this.HitLandingPad.bind(this));
         this.physics.add.collider(this.player, this.worldLayers.layers['World'], this.HitWorld, null, this);
         this.cameras.main.startFollow(this.player, true);
 
@@ -65,7 +65,7 @@ export class DemoScene extends Phaser.Scene {
     }
     
     HitWorld(event){
-		// //console.log('Hit Ground');
+		console.log('Hit Ground');
 		// //debugger;
 		// this.bank = 0;
 		// this.order = 0;
@@ -73,5 +73,24 @@ export class DemoScene extends Phaser.Scene {
 		// // this.SetHudPad('DEAD!');
 		// // this.SetHudBank();
 		// this.scene.restart();
+    }
+    
+    HitLandingPad(event, evtwo){
+		if( !this.player.gear.visible || 
+			event.body.touching.up || 
+			event.body.touching.left || 
+			event.body.touching.right
+		){
+			this.HitWorld();
+		}else{
+			// //this.SetHudPad('Landed: Pad '+evtwo.properties.padnum);
+			// if( evtwo.properties.padnum === this.order ){
+			// 	if( this.order === 0 ){
+			// 		this.SetOrder(this.ChooseOrderPad());
+			// 	}else{
+			// 		this.SetOrderReceived();
+			// 	}
+			// }
+		}
 	}
 }
