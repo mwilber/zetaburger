@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import Player from '../Player';
 import { WorldLayers } from '../WorldLayers';
+import { Hud } from '../Hud';
 
 export class DemoScene extends Phaser.Scene {
     constructor() {
@@ -13,7 +14,8 @@ export class DemoScene extends Phaser.Scene {
         this.load.spritesheet('ship', '../../assets/sprites/anim_ship_spin.png', { frameWidth: 192, frameHeight: 63 });
         this.load.image('landing_gear', '../../assets/sprites/LandingGear.png');
         this.load.image('tiles', '../../assets/sprites/super-mario-tiles.png');
-		this.load.tilemapTiledJSON("map", "../../assets/sprites/SuperMarioTiles.json");
+        this.load.tilemapTiledJSON("map", "../../assets/sprites/SuperMarioTiles.json");
+        this.load.html('hud', '../../assets/html/hud.html');
     }
 
     create() {
@@ -40,6 +42,8 @@ export class DemoScene extends Phaser.Scene {
         this.worldLayers.CreateLandingPadLayer(this, 'Test', this.player, this.HitLandingPad.bind(this));
         this.physics.add.collider(this.player, this.worldLayers.layers['World'], this.HitWorld, null, this);
         this.cameras.main.startFollow(this.player, true);
+
+        this.hud = new Hud({scene: this, x: 120, y: 65});
 
     }
 
