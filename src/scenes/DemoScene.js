@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import Player from '../Player';
-import { WorldLayer } from '../WorldLayer.';
+import { WorldLayers } from '../WorldLayers';
 
 export class DemoScene extends Phaser.Scene {
     constructor() {
@@ -23,8 +23,7 @@ export class DemoScene extends Phaser.Scene {
 
         this.InitAnims();
 
-        this.worldLayer = new WorldLayer(this, 'map', 'tiles', ['Background', 'World', 'LandingPads']);
-
+        this.worldLayers = new WorldLayers(this, 'map', 'tiles', ['Background', 'World', 'LandingPads']);
         this.player = new Player({
             scene: this,
             x: 100,
@@ -36,8 +35,9 @@ export class DemoScene extends Phaser.Scene {
             },
             gear: 'gear'
         });
+        this.worldLayers.CreateObjectLayer(this, 'Test', this.player);
 
-        this.physics.add.collider(this.player, this.worldLayer.layers['World'], this.HitWorld, null, this);
+        this.physics.add.collider(this.player, this.worldLayers.layers['World'], this.HitWorld, null, this);
         this.cameras.main.startFollow(this.player, true);
 
     }
