@@ -43,7 +43,7 @@ export class DemoScene extends Phaser.Scene {
         this.physics.add.collider(this.player, this.worldLayers.layers['World'], this.HitWorld, null, this);
         this.cameras.main.startFollow(this.player, true);
 
-        this.hud = new Hud({scene: this, x: 120, y: 65});
+        this.hud = new Hud({scene: this, x: -250, y: 50});
 
     }
 

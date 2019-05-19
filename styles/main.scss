@@ -18,3 +18,11 @@ h1{
 	width: 64px;
 	height: 64px;
 }
+
+#phaser-game{
+	width: 800px;
+    height: 600px;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%,0);
+}
