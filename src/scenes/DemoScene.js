@@ -2,12 +2,13 @@ import Phaser from 'phaser';
 import Player from '../Player';
 import { WorldLayers } from '../WorldLayers';
 import { Hud } from '../Hud';
+import { OrderManager } from '../OrderManager';
 
 export class DemoScene extends Phaser.Scene {
     constructor() {
 		super({
 			key: 'DemoScene'
-		});
+        });
 	}
 
 	preload() {
@@ -29,7 +30,7 @@ export class DemoScene extends Phaser.Scene {
         this.worldLayers = new WorldLayers(this, 'map', 'tiles', ['Background', 'World', 'LandingPads']);
         this.player = new Player({
             scene: this,
-            x: 100,
+            x: 400,
             y: 3000,
             ship: {
                 x: 48,
@@ -43,6 +44,7 @@ export class DemoScene extends Phaser.Scene {
         this.physics.add.collider(this.player, this.worldLayers.layers['World'], this.HitWorld, null, this);
         this.cameras.main.startFollow(this.player, true);
 
+        this.orderManager = new OrderManager(this.worldLayers.objects);
         this.hud = new Hud({scene: this, x: -250, y: 50});
 
     }
@@ -69,7 +71,7 @@ export class DemoScene extends Phaser.Scene {
     }
     
     HitWorld(event){
-		console.log('Hit Ground');
+		//console.log('Hit Ground');
 		// //debugger;
 		// this.bank = 0;
 		// this.order = 0;
@@ -87,14 +89,16 @@ export class DemoScene extends Phaser.Scene {
 		){
 			this.HitWorld();
 		}else{
-			// //this.SetHudPad('Landed: Pad '+evtwo.properties.padnum);
-			// if( evtwo.properties.padnum === this.order ){
-			// 	if( this.order === 0 ){
-			// 		this.SetOrder(this.ChooseOrderPad());
-			// 	}else{
-			// 		this.SetOrderReceived();
-			// 	}
-			// }
+			//this.SetHudPad('Landed: Pad '+evtwo.properties.padnum);
+			if( evtwo.properties.padnum === this.orderManager.currentorder ){
+				if( this.orderManager.currentorder === 0 ){
+                    this.orderManager.ChooseOrderPad();
+                    this.hud.SetHudPad(this.orderManager.currentorder);
+				}else{
+                    this.orderManager.ClearOrderPad();
+                    this.hud.SetHudThanks();
+				}
+			}
 		}
 	}
 }
