@@ -85,26 +85,38 @@ export default class Player extends Phaser.GameObjects.Container{
     }
 
     RetractGear(){
-        this.relax = 10;
         this.gear.visible = false;
         this.body.height = 31;
     }
 
     ExtendGear(){
-        this.relax = 10;
         this.gear.visible = true;
         this.body.height = 55;
     }
 
     ChangeFlightMode(newMode){
-        if(this.relax === 0){
+        if(newMode !== this.flightmode && this.relax === 0){
+            this.relax = 10;
             this.flightmode = newMode;
             switch(this.flightmode){
                 case this.FLIGHT_MODES.delta:
                     this.RetractGear();
                     break;
+                case this.FLIGHT_MODES.omicron:
+                    this.ExtendGear();
+                    break;
+                case this.FLIGHT_MODES.landed:
+                    break;
                 default:
             }
+        }
+    }
+
+    ToggleFlightMode(){
+        if(this.flightmode === this.FLIGHT_MODES.delta){
+            this.ChangeFlightMode(this.FLIGHT_MODES.omicron);
+        }else{
+            this.ChangeFlightMode(this.FLIGHT_MODES.delta);
         }
     }
 

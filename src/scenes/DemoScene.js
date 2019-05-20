@@ -60,6 +60,10 @@ export class DemoScene extends Phaser.Scene {
 			this.player.SteerRelax();
         }
         this.player.Idle();
+
+        if(this.cursors.space.isDown){
+			this.player.ToggleFlightMode();
+		}
     }
 
     InitAnims(){
