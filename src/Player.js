@@ -7,7 +7,8 @@ export default class Player extends Phaser.GameObjects.Container{
 
         this.FLIGHT_MODES = {
             omicron: 'omicron',
-            delta: 'delta'
+            delta: 'delta',
+            landed: 'landed'
         };
 
         this.flightmode = this.FLIGHT_MODES.omicron;
@@ -19,7 +20,7 @@ export default class Player extends Phaser.GameObjects.Container{
 
         this.gear = scene.add.sprite(48, 66, 'landing_gear');
 		this.gear.visible = true;
-		this.gear.relax = 0;
+		this.relax = 0;
 
         this.add([this.ship, this.gear]);
 
@@ -38,21 +39,29 @@ export default class Player extends Phaser.GameObjects.Container{
     }
 
     SteerLeft(){
-        this.body.setAccelerationX(-500);
-        if(this.flightmode === this.FLIGHT_MODES.delta){
-            this.body.setAccelerationY(-500);
-            if(this.angle > -15){
-                this.setAngle(this.angle-1);
+        if(this.flightmode === this.FLIGHT_MODES.landed){
+            this.TakeOff();
+        }else{
+            this.body.setAccelerationX(-500);
+            if(this.flightmode === this.FLIGHT_MODES.delta){
+                this.body.setAccelerationY(-500);
+                if(this.angle > -15){
+                    this.setAngle(this.angle-1);
+                }
             }
         }
     }
 
     SteerRight(){
-        this.body.setAccelerationX(500);
-        if(this.flightmode === this.FLIGHT_MODES.delta){
-            this.body.setAccelerationY(-500);
-            if(this.angle < 15){
-                this.setAngle(this.angle+1);
+        if(this.flightmode === this.FLIGHT_MODES.landed){
+            this.TakeOff();
+        }else{
+            this.body.setAccelerationX(500);
+            if(this.flightmode === this.FLIGHT_MODES.delta){
+                this.body.setAccelerationY(-500);
+                if(this.angle < 15){
+                    this.setAngle(this.angle+1);
+                }
             }
         }
     }
@@ -70,9 +79,40 @@ export default class Player extends Phaser.GameObjects.Container{
         if(this.flightmode === this.FLIGHT_MODES.omicron){
             this.body.setAccelerationY(-175);
         }
+        if(this.relax !== 0){
+			this.relax = Math.abs(this.relax) - 1;
+		}
     }
 
-    SetFlightMode(flightMode){
+    RetractGear(){
+        this.relax = 10;
+        this.gear.visible = false;
+        this.body.height = 31;
+    }
 
+    ExtendGear(){
+        this.relax = 10;
+        this.gear.visible = true;
+        this.body.height = 55;
+    }
+
+    ChangeFlightMode(newMode){
+        if(this.relax === 0){
+            this.flightmode = newMode;
+            switch(this.flightmode){
+                case this.FLIGHT_MODES.delta:
+                    this.RetractGear();
+                    break;
+                default:
+            }
+        }
+    }
+
+    Land(){
+        this.ChangeFlightMode(this.FLIGHT_MODES.landed);
+    }
+
+    TakeOff(){
+        this.ChangeFlightMode(this.FLIGHT_MODES.delta);
     }
 }

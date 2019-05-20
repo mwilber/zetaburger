@@ -85,7 +85,8 @@ export class DemoScene extends Phaser.Scene {
 		){
 			this.HitWorld();
 		}else{
-			//this.SetHudPad('Landed: Pad '+evtwo.properties.padnum);
+            //this.SetHudPad('Landed: Pad '+evtwo.properties.padnum);
+            this.player.Land();
 			if( evtwo.properties.padnum === this.orderManager.currentorder ){
 				if( this.orderManager.currentorder === 0 ){
                     this.orderManager.ChooseOrderPad();
