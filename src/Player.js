@@ -12,6 +12,7 @@ export default class Player extends Phaser.GameObjects.Container{
         };
 
         this.flightmode = this.FLIGHT_MODES.omicron;
+        this.flightmodehandlers = [];
 
         this.ship = new ShipSprite({
             ...ship,
@@ -33,7 +34,7 @@ export default class Player extends Phaser.GameObjects.Container{
 		this.body.setAllowDrag(true);
 		this.body.setDrag(70, 70);
 		this.body.setFriction(1, 0);
-		this.body.setCollideWorldBounds(true);
+        this.body.setCollideWorldBounds(true);
         
         scene.add.existing(this);
     }
@@ -109,6 +110,7 @@ export default class Player extends Phaser.GameObjects.Container{
                     break;
                 default:
             }
+            this.Publish('flightmodechange', this.flightmode);
         }
     }
 
@@ -126,5 +128,18 @@ export default class Player extends Phaser.GameObjects.Container{
 
     TakeOff(){
         this.ChangeFlightMode(this.FLIGHT_MODES.delta);
+    }
+
+    Subscribe(event, handler, context) {
+        if (typeof context === 'undefined') { context = handler; }
+        this.flightmodehandlers.push({ event: event, handler: handler.bind(context) });
+    }
+
+    Publish(event, args) {
+        this.flightmodehandlers.forEach(topic => {
+          if (topic.event === event) {
+            topic.handler(args)
+          }
+        })
     }
 }

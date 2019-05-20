@@ -46,7 +46,7 @@ export class DemoScene extends Phaser.Scene {
         this.orderManager = new OrderManager(this.worldLayers.objects);
         this.cashManager = new CashManager();
         this.hud = new Hud({scene: this, x: -250, y: 50});
-
+        this.player.Subscribe('flightmodechange', (message)=>{console.log('success', message);}, this);
     }
 
     update() {
