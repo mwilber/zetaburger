@@ -18,5 +18,21 @@ export class Hud extends Phaser.GameObjects.DOMElement{
 
 	SetHudBank(value){
 		this.getChildByID('hud-bank').innerHTML = '$'+String(value);
-	}
+    }
+    
+    SetHudMode(mode){
+        let modeOut = '';
+        switch(mode){
+            case 'delta':
+                modeOut = '&#x0394';
+                break;
+            case 'omicron':
+                modeOut = '&#x039F';
+                break;
+            default:
+                modeOut = '_';
+                break;
+        }
+        this.getChildByID('hud-mode').innerHTML = 'Flight Mode: '+modeOut;
+    }
 }
