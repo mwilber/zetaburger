@@ -16,7 +16,7 @@ export class Hud extends Phaser.GameObjects.DOMElement{
         this.getChildByID('hud-pad').innerHTML = 'Thanks!';
     }
 
-	SetHudBank(){
-		this.getChildByID('hud-bank').innerHTML = '$'+this.bank.toString();
+	SetHudBank(value){
+		this.getChildByID('hud-bank').innerHTML = '$'+String(value);
 	}
 }
