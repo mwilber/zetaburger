@@ -58,7 +58,8 @@ export class DemoScene extends Phaser.Scene {
 			this.player.SteerRight();
 		}else{
 			this.player.SteerRelax();
-		}
+        }
+        this.player.Idle();
     }
 
     InitAnims(){

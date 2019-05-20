@@ -39,17 +39,21 @@ export default class Player extends Phaser.GameObjects.Container{
 
     SteerLeft(){
         this.body.setAccelerationX(-500);
-        this.body.setAccelerationY(-500);
-        if(this.angle > -15){
-            this.setAngle(this.angle-1);
+        if(this.flightmode === this.FLIGHT_MODES.delta){
+            this.body.setAccelerationY(-500);
+            if(this.angle > -15){
+                this.setAngle(this.angle-1);
+            }
         }
     }
 
     SteerRight(){
         this.body.setAccelerationX(500);
-        this.body.setAccelerationY(-500);
-        if(this.angle < 15){
-            this.setAngle(this.angle+1);
+        if(this.flightmode === this.FLIGHT_MODES.delta){
+            this.body.setAccelerationY(-500);
+            if(this.angle < 15){
+                this.setAngle(this.angle+1);
+            }
         }
     }
 
@@ -60,6 +64,12 @@ export default class Player extends Phaser.GameObjects.Container{
             this.setAngle(this.angle*0.7);
         }
         this.body.setAcceleration(0);
+    }
+
+    Idle(){
+        if(this.flightmode === this.FLIGHT_MODES.omicron){
+            this.body.setAccelerationY(-175);
+        }
     }
 
     SetFlightMode(flightMode){
