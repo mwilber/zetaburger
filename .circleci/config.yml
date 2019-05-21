@@ -40,4 +40,4 @@ workflows:
       - build:
           filters:
             branches:
-              only: xmas-eve-nightmare
+              only: master
