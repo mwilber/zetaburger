@@ -2,6 +2,41 @@
 *   Minimum styling for PWA app shell
 */
 
+html, body{
+	font-family: sans-serif;
+	background: #7bb951;
+	color: #fff;
+	font-size: 12px;
+	text-align: center;
+	padding: 20px 0;
+}
+
+p{
+    width:50%;
+    margin: 1em 25%;
+}
+
 h1{
-    color: #000;
+	text-align: center;
+	color: #ffffff;
+}
+
+a,
+a:hover,
+a:active,
+a:visited{
+    color: #2B4921;
+}
+
+#logo{
+	width: 64px;
+	height: 64px;
+}
+
+#phaser-game{
+	width: 800px;
+    height: 600px;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%,0);
 }

@@ -1,28 +1,2 @@
 @import 'normalize';
 
-html, body{
-	font-family: sans-serif;
-	background: #7bb951;
-	color: #fff;
-	font-size: 12px;
-	text-align: center;
-	padding: 20px 0;
-}
-
-h1{
-	text-align: center;
-	color: #ffffff;
-}
-
-#logo{
-	width: 64px;
-	height: 64px;
-}
-
-#phaser-game{
-	width: 800px;
-    height: 600px;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%,0);
-}
