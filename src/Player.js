@@ -29,7 +29,7 @@ export default class Player extends Phaser.GameObjects.Container{
 		this.setActive(true);
         this.setScale(0.5);
         scene.physics.world.enable(this, 0);
-		this.body.setBounceY(0.2);
+		this.body.setBounceY(0.5);
 		this.body.setGravity(0,-100);
 		this.body.setAllowDrag(true);
 		this.body.setDrag(70, 70);
