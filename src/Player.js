@@ -123,6 +123,7 @@ export default class Player extends Phaser.GameObjects.Container{
     }
 
     Land(){
+        this.body.setVelocityX(0);
         this.ChangeFlightMode(this.FLIGHT_MODES.landed);
     }
 
