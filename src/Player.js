@@ -11,6 +11,10 @@ export default class Player extends Phaser.GameObjects.Container{
             landed: 'landed'
         };
 
+        this.acceleration = 500;
+        this.omicrondrag = 0.5;
+        this.rollmax = 15;
+
         this.flightmode = this.FLIGHT_MODES.omicron;
         this.flightmodehandlers = [];
 
@@ -46,14 +50,17 @@ export default class Player extends Phaser.GameObjects.Container{
             this.TakeOff();
         }else{
             if(this.flightmode === this.FLIGHT_MODES.delta){
-                this.body.setAccelerationX(-500);
-                this.body.setAccelerationY(-500);
-                if(this.angle > -15){
+                this.body.setAccelerationX(-this.acceleration);
+                this.body.setAccelerationY(-this.acceleration);
+                if(this.angle > -this.rollmax){
                     this.setAngle(this.angle-1);
                 }
             }else if(this.flightmode === this.FLIGHT_MODES.omicron){
-                this.body.setAccelerationX(-250);
-                this.body.setAccelerationY(-250);
+                this.body.setAccelerationX(-(this.acceleration * this.omicrondrag));
+                this.body.setAccelerationY(-(this.acceleration * this.omicrondrag));
+                if(this.angle > -(this.rollmax * this.omicrondrag)){
+                    this.setAngle(this.angle-1);
+                }
             }
         }
     }
@@ -63,14 +70,17 @@ export default class Player extends Phaser.GameObjects.Container{
             this.TakeOff();
         }else{
             if(this.flightmode === this.FLIGHT_MODES.delta){
-                this.body.setAccelerationX(500);
-                this.body.setAccelerationY(-500);
-                if(this.angle < 15){
+                this.body.setAccelerationX(this.acceleration);
+                this.body.setAccelerationY(-this.acceleration);
+                if(this.angle < this.rollmax){
                     this.setAngle(this.angle+1);
                 }
             }else if(this.flightmode === this.FLIGHT_MODES.omicron){
-                this.body.setAccelerationX(250);
-                this.body.setAccelerationY(-250);
+                this.body.setAccelerationX((this.acceleration * this.omicrondrag));
+                this.body.setAccelerationY(-(this.acceleration * this.omicrondrag));
+                if(this.angle < (this.rollmax * this.omicrondrag)){
+                    this.setAngle(this.angle+1);
+                }
             }
         }
     }
