@@ -11,6 +11,10 @@ export default class Player extends Phaser.GameObjects.Container{
             landed: 'landed'
         };
 
+        this.acceleration = 500;
+        this.omicrondrag = 0.5;
+        this.rollmax = 15;
+
         this.flightmode = this.FLIGHT_MODES.omicron;
         this.flightmodehandlers = [];
 
@@ -29,12 +33,14 @@ export default class Player extends Phaser.GameObjects.Container{
 		this.setActive(true);
         this.setScale(0.5);
         scene.physics.world.enable(this, 0);
+        this.body.setMass(1);
 		this.body.setBounceY(0.5);
 		this.body.setGravity(0,-100);
 		this.body.setAllowDrag(true);
 		this.body.setDrag(70, 70);
 		this.body.setFriction(1, 0);
         this.body.setCollideWorldBounds(true);
+        //this.body.allowGravity = false;
         
         scene.add.existing(this);
     }
@@ -43,10 +49,16 @@ export default class Player extends Phaser.GameObjects.Container{
         if(this.flightmode === this.FLIGHT_MODES.landed){
             this.TakeOff();
         }else{
-            this.body.setAccelerationX(-500);
             if(this.flightmode === this.FLIGHT_MODES.delta){
-                this.body.setAccelerationY(-500);
-                if(this.angle > -15){
+                this.body.setAccelerationX(-this.acceleration);
+                this.body.setAccelerationY(-this.acceleration);
+                if(this.angle > -this.rollmax){
+                    this.setAngle(this.angle-1);
+                }
+            }else if(this.flightmode === this.FLIGHT_MODES.omicron){
+                this.body.setAccelerationX(-(this.acceleration * this.omicrondrag));
+                this.body.setAccelerationY(-(this.acceleration * this.omicrondrag));
+                if(this.angle > -(this.rollmax * this.omicrondrag)){
                     this.setAngle(this.angle-1);
                 }
             }
@@ -57,10 +69,16 @@ export default class Player extends Phaser.GameObjects.Container{
         if(this.flightmode === this.FLIGHT_MODES.landed){
             this.TakeOff();
         }else{
-            this.body.setAccelerationX(500);
             if(this.flightmode === this.FLIGHT_MODES.delta){
-                this.body.setAccelerationY(-500);
-                if(this.angle < 15){
+                this.body.setAccelerationX(this.acceleration);
+                this.body.setAccelerationY(-this.acceleration);
+                if(this.angle < this.rollmax){
+                    this.setAngle(this.angle+1);
+                }
+            }else if(this.flightmode === this.FLIGHT_MODES.omicron){
+                this.body.setAccelerationX((this.acceleration * this.omicrondrag));
+                this.body.setAccelerationY(-(this.acceleration * this.omicrondrag));
+                if(this.angle < (this.rollmax * this.omicrondrag)){
                     this.setAngle(this.angle+1);
                 }
             }
@@ -77,20 +95,20 @@ export default class Player extends Phaser.GameObjects.Container{
     }
 
     Idle(){
-        if(this.flightmode === this.FLIGHT_MODES.omicron){
-            this.body.setAccelerationY(-175);
-        }
         if(this.relax !== 0){
 			this.relax = Math.abs(this.relax) - 1;
 		}
     }
 
     RetractGear(){
+        //this.body.allowGravity = true;
         this.gear.visible = false;
         this.body.height = 31;
     }
 
     ExtendGear(){
+        //this.body.allowGravity = false;
+        this.body.setVelocityY(0);
         this.gear.visible = true;
         this.body.height = 55;
     }
@@ -123,6 +141,7 @@ export default class Player extends Phaser.GameObjects.Container{
     }
 
     Land(){
+        //this.body.allowGravity = true;
         this.body.setVelocityX(0);
         this.ChangeFlightMode(this.FLIGHT_MODES.landed);
     }
