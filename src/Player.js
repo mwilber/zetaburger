@@ -45,13 +45,14 @@ export default class Player extends Phaser.GameObjects.Container{
         if(this.flightmode === this.FLIGHT_MODES.landed){
             this.TakeOff();
         }else{
-            this.body.setAccelerationX(-500);
             if(this.flightmode === this.FLIGHT_MODES.delta){
+                this.body.setAccelerationX(-500);
                 this.body.setAccelerationY(-500);
                 if(this.angle > -15){
                     this.setAngle(this.angle-1);
                 }
             }else if(this.flightmode === this.FLIGHT_MODES.omicron){
+                this.body.setAccelerationX(-250);
                 this.body.setAccelerationY(-250);
             }
         }
@@ -61,13 +62,14 @@ export default class Player extends Phaser.GameObjects.Container{
         if(this.flightmode === this.FLIGHT_MODES.landed){
             this.TakeOff();
         }else{
-            this.body.setAccelerationX(500);
             if(this.flightmode === this.FLIGHT_MODES.delta){
+                this.body.setAccelerationX(500);
                 this.body.setAccelerationY(-500);
                 if(this.angle < 15){
                     this.setAngle(this.angle+1);
                 }
             }else if(this.flightmode === this.FLIGHT_MODES.omicron){
+                this.body.setAccelerationX(250);
                 this.body.setAccelerationY(-250);
             }
         }
